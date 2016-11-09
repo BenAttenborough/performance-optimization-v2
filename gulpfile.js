@@ -7,7 +7,7 @@
 var sassDir = 'sass/',
     sassFile = 'style.scss',
     sassMain = sassDir.concat(sassFile),
-    cssDir = './',
+    cssDir = 'css/',
     gulp = require('gulp'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
@@ -16,16 +16,16 @@ var sassDir = 'sass/',
     maps = require('gulp-sourcemaps'),
     del = require('del');
 
-//gulp.task('sassify', function () {
-//    return gulp.src([
-//            sassMain
-//        ])
-//        .pipe(maps.init())
-//        .pipe(sassify({outputStyle: 'compressed'}))
-//        .on('error', sassify.logError)
-//        .pipe(maps.write('./'))
-//        .pipe(gulp.dest(cssDir))
-//});
+gulp.task('sassify', function () {
+    return gulp.src([
+            sassMain
+        ])
+        .pipe(maps.init())
+        .pipe(sassify({outputStyle: 'compressed'}))
+        .on('error', sassify.logError)
+        .pipe(maps.write('./'))
+        .pipe(gulp.dest(cssDir))
+});
 
 //gulp.task('clean', function() {
 //    return gulp.src([
