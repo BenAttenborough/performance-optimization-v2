@@ -12,7 +12,7 @@ var sassDir = 'sass/',
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
-//sassify = require('gulp-sass'),
+    sassify = require('gulp-sass'),
     maps = require('gulp-sourcemaps'),
     del = require('del');
 
