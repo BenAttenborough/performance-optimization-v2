@@ -12,20 +12,20 @@ var sassDir = 'sass/',
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
-    sassify = require('gulp-sass'),
+//sassify = require('gulp-sass'),
     maps = require('gulp-sourcemaps'),
     del = require('del');
 
-gulp.task('sassify', function () {
-    return gulp.src([
-            sassMain
-        ])
-        .pipe(maps.init())
-        .pipe(sassify({outputStyle: 'compressed'}))
-        .on('error', sassify.logError)
-        .pipe(maps.write('./'))
-        .pipe(gulp.dest(cssDir))
-});
+//gulp.task('sassify', function () {
+//    return gulp.src([
+//            sassMain
+//        ])
+//        .pipe(maps.init())
+//        .pipe(sassify({outputStyle: 'compressed'}))
+//        .on('error', sassify.logError)
+//        .pipe(maps.write('./'))
+//        .pipe(gulp.dest(cssDir))
+//});
 
 //gulp.task('clean', function() {
 //    return gulp.src([
@@ -36,9 +36,12 @@ gulp.task('sassify', function () {
 
 gulp.task("concatScripts", function () {
     return gulp.src([
-            'js/navigation.js',
-            'js/skip-link-focus-fix.js',
-            'js/main.js'
+            'js/jquery.js',
+            'js/fastclick.js',
+            'js/foundation.js',
+            'js/foundation.equalizer.js',
+            'js/foundation.reveal.js',
+            'js/scripts.js'
         ])
         .pipe(maps.init())
         .pipe(concat('app.js'))
@@ -47,7 +50,7 @@ gulp.task("concatScripts", function () {
 });
 
 gulp.task("minifyScripts", ["concatScripts"], function () {
-    return gulp.src("js/app.js")
+    return gulp.src(['js/app.js'])
         .pipe(uglify())
         .pipe(rename('app.min.js'))
         .pipe(gulp.dest('js'));
@@ -58,7 +61,7 @@ gulp.task('watch', function () {
     gulp.watch('js/main.js', ['concatScripts']);
 });
 
-gulp.task('build', function () {
+gulp.task('build', ['minifyScripts'], function () {
     return gulp.src([
             'css/style.css*',
             'img/**',
