@@ -14,6 +14,13 @@ var sassDir = 'sass/',
     rename = require('gulp-rename'),
     sassify = require('gulp-sass'),
     maps = require('gulp-sourcemaps'),
+    spritesmith = require('gulp.spritesmith'),
+
+    buffer = require('vinyl-buffer'),
+    csso = require('gulp-csso'),
+    imagemin = require('gulp-imagemin'),
+    merge = require('merge-stream'),
+
     del = require('del');
 
 gulp.task('sassify', function () {
@@ -25,6 +32,34 @@ gulp.task('sassify', function () {
         .on('error', sassify.logError)
         .pipe(maps.write('./'))
         .pipe(gulp.dest(cssDir))
+});
+
+gulp.task('createSprites', function () {
+    var spriteData = gulp.src('img/sprites/*.jpg')
+        .pipe(spritesmith({
+            imgName: 'avatars.png',
+            cssName: 'spriteCSS.css'
+        }));
+
+    var imgStream = spriteData.img
+        .pipe(buffer())
+        .pipe(imagemin())
+        .pipe(gulp.dest('css/'));
+
+    var cssStream = spriteData.css
+        .pipe(csso())
+        .pipe(gulp.dest('sass/containers/'))
+        .pipe(rename('_sprite.scss'));
+    return merge(imgStream, cssStream);
+    //return spriteData.pipe(gulp.dest('img/sprites/'))
+});
+
+gulp.task('sprite', ['createSprites'], function () {
+    return gulp.src([
+            'sass/containers/spriteCSS.css'
+        ])
+        .pipe(rename('_sprite.scss'))
+        .pipe(gulp.dest('sass/containers/'))
 });
 
 //gulp.task('clean', function() {
