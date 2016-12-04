@@ -99,18 +99,16 @@ gulp.task('watch', function () {
 gulp.task('build', ['minifyScripts'], function () {
     return gulp.src([
             'css/style.css*',
+            'css/avatars.png',
             'img/**',
             'js/**',
-            'languages/**',
-            'layouts/**',
-            'template-parts/**',
-            'inc/**',
-            '*.php',
+            '*.html',
             '*.js',
             '*.md',
             '*.txt',
             '*.css',
-            '*.png'
+            '*.png',
+            '*.svg'
         ],
         {base: './'})
         .pipe(gulp.dest('dist'))
