@@ -102,13 +102,7 @@ gulp.task('build', ['minifyScripts'], function () {
             'css/avatars.png',
             'img/**',
             'js/**',
-            '*.html',
-            '*.js',
-            '*.md',
-            '*.txt',
-            '*.css',
-            '*.png',
-            '*.svg'
+            '*.html'
         ],
         {base: './'})
         .pipe(gulp.dest('dist'))
