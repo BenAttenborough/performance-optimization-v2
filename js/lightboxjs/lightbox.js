@@ -33,4 +33,3 @@ var thumbnailsCollection = [];
 for (var i = 0; i < thumbnails.length; i++) {
     thumbnailsCollection.push(new Thumbnail(thumbnails[i]));
 }
-//# sourceMappingURL=app.js.map

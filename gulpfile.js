@@ -71,12 +71,12 @@ gulp.task('sprite', ['createSprites'], function () {
 
 gulp.task("concatScripts", function () {
     return gulp.src([
-            'js/jquery.js',
-            'js/fastclick.js',
-            'js/foundation.js',
-            'js/foundation.equalizer.js',
-            'js/foundation.reveal.js',
-            'js/scripts.js'
+            //'js/jquery.js',
+            //'js/fastclick.js',
+            //'js/foundation.js',
+            //'js/foundation.equalizer.js',
+            //'js/foundation.reveal.js',
+            'js/lightboxjs/lightbox.js'
         ])
         .pipe(maps.init())
         .pipe(concat('app.js'))
@@ -93,7 +93,7 @@ gulp.task("minifyScripts", ["concatScripts"], function () {
 
 gulp.task('watch', function () {
     gulp.watch(['sass/**/*.scss', 'sass/*.scss'], ['sassify']);
-    gulp.watch('js/main.js', ['concatScripts']);
+    gulp.watch('js/lightboxjs/lightbox.js', ['minifyScripts']);
 });
 
 gulp.task('build', ['minifyScripts'], function () {
