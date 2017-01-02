@@ -25,12 +25,14 @@ Thumbnail.prototype.getDataId = function () {
 Thumbnail.prototype.getImageData = function () {
     // Setup object to contain image data
     var imageData = {
+        container: "",
         src: "",
         srcset: "",
         alt: ""
     };
     if (document.getElementById(this.dataID)) {
         var imageContainer = document.getElementById(this.dataID);
+        imageData.container = imageContainer;
     } else {
         console.log("Error: No element with an id of " + this.dataID + " found");
         return null;
@@ -73,6 +75,9 @@ Thumbnail.prototype.showLightbox = function () {
     //console.log(this.dataID);
     console.log(this.imageData);
     //console.log(this.images.dataset.imgs);
+    var imageContainer = this.imageData.container;
+    console.log("Img con: " + imageContainer);
+    imageContainer.className = "";
 };
 
 var thumbnailsCollection = [];
