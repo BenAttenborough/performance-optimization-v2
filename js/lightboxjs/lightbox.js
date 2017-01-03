@@ -4,8 +4,6 @@
 
 console.log("Lightbox working");
 
-var thumbnails = document.getElementsByClassName("image");
-
 var Thumbnail = function (element) {
     this.element = element;
     this.src = this.getImageSrc();
@@ -59,7 +57,6 @@ Thumbnail.prototype.getImageData = function () {
         imageData.alt = imageAlt;
     }
     return imageData;
-
 };
 
 Thumbnail.prototype.assignClickFunctions = function () {
@@ -71,81 +68,31 @@ Thumbnail.prototype.addSelectListener = function (element, type, func) {
 };
 
 Thumbnail.prototype.showLightbox = function () {
-    //console.log(this.src);
-    //console.log(this.dataID);
-    console.log(this.imageData);
-    //console.log(this.images.dataset.imgs);
-    var imageContainer = this.imageData.container;
-    console.log("Img con: " + imageContainer);
-    imageContainer.className = "";
+    if (this.imageData.container) {
+        var lightboxContainer = this.imageData.container;
+        var photobox = lightboxContainer.getElementsByClassName("photoBox")[0];
+        var img = "<img src=\"" + this.imageData.src + "\">";
+        var revealModalBg = document.getElementById("reveal-modal-overlay");
+        var closeButton = lightboxContainer.getElementsByClassName("close-reveal-modal")[0];
+        this.addSelectListener(closeButton, "click", this.hideLightbox);
+        revealModalBg.style.display = "block";
+        lightboxContainer.style.display = "block";
+        photobox.innerHTML = img;
+        console.log(lightboxContainer.getElementsByClassName("close-reveal-modal")[0])
+    }
+};
+
+Thumbnail.prototype.hideLightbox = function (evt) {
+    evt.preventDefault();
+    var lightboxContainer = this.imageData.container;
+    var revealModalBg = document.getElementById("reveal-modal-overlay");
+    revealModalBg.style.display = "none";
+    lightboxContainer.style.display = "none";
 };
 
 var thumbnailsCollection = [];
+var thumbnails = document.getElementsByClassName("image");
 
 for (var i = 0; i < thumbnails.length; i++) {
     thumbnailsCollection.push(new Thumbnail(thumbnails[i]));
 }
-
-//var lightbox = {
-//    overlay: "<div id='overlay' class='clearfix'></div>",
-//    previousBtn: "<div class='col-prev clearfix'><a href='#'><img src='img/previousBtn.png' class='nav-btn'></a></div>",
-//    contentDiv: "<div class='col-main clearfix'></div>",
-//    nextBtn: "<div class='col-next clearfix'><a href='#'><img src='img/nextBtn.png' class='nav-btn'></a></div>",
-//    instructions: "<p>Use arrow keys or buttons to cycle images</p>",
-//    mediaContainer: "<div class='media-container'>",
-//    caption: "<p></p>"
-//};
-
-/*
- *	Appends an overlay to the screen, this is initial hidden in CSS
- *	@PARAM none
- *  @RETURN none
- */
-function addOverlay(parent, elementToAttach) {
-    var elementContainer = document.createElement(elementToAttach.type);
-    var elementNode = document.createTextNode(elementToAttach.content);
-    elementContainer.id = elementToAttach.id;
-    elementContainer.className = elementToAttach.classes;
-    elementContainer.appendChild(elementNode);
-    console.log(elementContainer);
-    parent.appendChild(elementContainer);
-}
-
-var Lightbox = function () {
-    this.elements = [];
-};
-
-Lightbox.prototype.addElement = function (element) {
-    this.elements.push(element);
-};
-
-lightbox = new Lightbox();
-
-var LightboxElement = function (type, id, classes, content) {
-    this.type = type;
-    this.id = id;
-    this.classes = classes;
-    this.content = content;
-};
-
-var overlay = new LightboxElement("div", "overlay", "clearfix", "Hello world");
-lightbox.addElement(overlay);
-var previousBtn = new LightboxElement("div", "", "col-prev clearfix", "<a href='#'><img src='img/previousBtn.png' class='nav-btn'></a>");
-lightbox.addElement(previousBtn);
-
-var objRef = document.body;
-
-
-addOverlay(objRef, lightbox.elements[0]);
-addOverlay(document.getElementById("overlay"), lightbox.elements[1]);
-
-
-//$contentDiv.append($instructions);
-//$contentDiv.append($mediaContainer);
-//$contentDiv.append($caption);
-//$overlay.append($previousBtn);
-//$overlay.append($contentDiv);
-//$overlay.append($nextBtn);
-//$("body").prepend($overlay);
-//fullHeight = $( "body" ).height();
-//$overlay.height( fullHeight );

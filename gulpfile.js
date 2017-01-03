@@ -27,6 +27,7 @@ gulp.task('sassify', function () {
     return gulp.src([
             sassMain
         ])
+        .on('error', swallowError)
         .pipe(maps.init())
         .pipe(sassify({outputStyle: 'compressed'}))
         .on('error', sassify.logError)
@@ -78,16 +79,18 @@ gulp.task("concatScripts", function () {
             //'js/foundation.reveal.js',
             'js/lightboxjs/lightbox.js'
         ])
-        .pipe(maps.init())
+        .on('error', swallowError)
         .pipe(concat('app.js'))
-        .pipe(maps.write('./'))
         .pipe(gulp.dest('js'));
 });
 
 gulp.task("minifyScripts", ["concatScripts"], function () {
     return gulp.src(['js/app.js'])
+        .pipe(maps.init())
         .pipe(uglify())
+        .on('error', swallowError)
         .pipe(rename('app.min.js'))
+        .pipe(maps.write('./'))
         .pipe(gulp.dest('js'));
 });
 
@@ -107,6 +110,11 @@ gulp.task('build', ['minifyScripts'], function () {
         {base: './'})
         .pipe(gulp.dest('dist'))
 });
+
+function swallowError(error) {
+    console.log(error.toString());
+    this.emit('end');
+}
 
 gulp.task('default', function () {
     gulp.start('build');
