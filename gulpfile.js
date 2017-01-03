@@ -96,6 +96,7 @@ gulp.task('build', ['minifyScripts'], function () {
     return gulp.src([
             'css/style.css*',
             'css/avatars.png',
+            'css/avatarsLG.png',
             'img/**',
             'js/app.min.js*',
             '*.html'

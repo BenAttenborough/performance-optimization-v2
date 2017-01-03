@@ -26,6 +26,16 @@
 .menu .inline-list .active a {
   color: rgb(82, 202, 109);
 }
+
+.menu .inline-list a {
+  color: rgb(72, 84, 97);
+  font-weight: bold;
+  letter-spacing: 0.125rem;
+  padding-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-family: "Arvo", serif;
+}
+
 @media only screen and (min-width: 40.063em) {
   .menu {
     height: 7rem;
