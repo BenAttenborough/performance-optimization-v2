@@ -15,12 +15,10 @@ var sassDir = 'sass/',
     sassify = require('gulp-sass'),
     maps = require('gulp-sourcemaps'),
     spritesmith = require('gulp.spritesmith'),
-
     buffer = require('vinyl-buffer'),
     csso = require('gulp-csso'),
     imagemin = require('gulp-imagemin'),
     merge = require('merge-stream'),
-
     del = require('del');
 
 gulp.task('sassify', function () {
@@ -36,10 +34,10 @@ gulp.task('sassify', function () {
 });
 
 gulp.task('createSprites', function () {
-    var spriteData = gulp.src('img/sprites/*.jpg')
+    var spriteData = gulp.src('img/avatars/*.jpg')
         .pipe(spritesmith({
-            imgName: 'avatars.png',
-            cssName: 'spriteCSS.css'
+            imgName: 'avatarsLG.png',
+            cssName: 'spriteLGCSS.css'
         }));
 
     var imgStream = spriteData.img
@@ -50,16 +48,16 @@ gulp.task('createSprites', function () {
     var cssStream = spriteData.css
         .pipe(csso())
         .pipe(gulp.dest('sass/containers/'))
-        .pipe(rename('_sprite.scss'));
+        .pipe(rename('_spriteLG.scss'));
     return merge(imgStream, cssStream);
     //return spriteData.pipe(gulp.dest('img/sprites/'))
 });
 
 gulp.task('sprite', ['createSprites'], function () {
     return gulp.src([
-            'sass/containers/spriteCSS.css'
+            'sass/containers/spriteLGCSS.css'
         ])
-        .pipe(rename('_sprite.scss'))
+        .pipe(rename('_spriteLG.scss'))
         .pipe(gulp.dest('sass/containers/'))
 });
 
@@ -72,11 +70,6 @@ gulp.task('sprite', ['createSprites'], function () {
 
 gulp.task("concatScripts", function () {
     return gulp.src([
-            //'js/jquery.js',
-            //'js/fastclick.js',
-            //'js/foundation.js',
-            //'js/foundation.equalizer.js',
-            //'js/foundation.reveal.js',
             'js/lightboxjs/lightbox.js'
         ])
         .on('error', swallowError)
@@ -104,7 +97,7 @@ gulp.task('build', ['minifyScripts'], function () {
             'css/style.css*',
             'css/avatars.png',
             'img/**',
-            'js/**',
+            'js/app.min.js*',
             '*.html'
         ],
         {base: './'})
