@@ -14,11 +14,6 @@ var sassDir = 'sass/',
     rename = require('gulp-rename'),
     sassify = require('gulp-sass'),
     maps = require('gulp-sourcemaps'),
-    spritesmith = require('gulp.spritesmith'),
-    buffer = require('vinyl-buffer'),
-    csso = require('gulp-csso'),
-    imagemin = require('gulp-imagemin'),
-    merge = require('merge-stream'),
     del = require('del');
 
 gulp.task('sassify', function () {
@@ -33,44 +28,9 @@ gulp.task('sassify', function () {
         .pipe(gulp.dest(cssDir))
 });
 
-gulp.task('createSprites', function () {
-    var spriteData = gulp.src('img/avatars/*.jpg')
-        .pipe(spritesmith({
-            imgName: 'avatarsLG.png',
-            cssName: 'spriteLGCSS.css'
-        }));
-
-    var imgStream = spriteData.img
-        .pipe(buffer())
-        .pipe(imagemin())
-        .pipe(gulp.dest('css/'));
-
-    var cssStream = spriteData.css
-        .pipe(csso())
-        .pipe(gulp.dest('sass/containers/'))
-        .pipe(rename('_spriteLG.scss'));
-    return merge(imgStream, cssStream);
-    //return spriteData.pipe(gulp.dest('img/sprites/'))
-});
-
-gulp.task('sprite', ['createSprites'], function () {
-    return gulp.src([
-            'sass/containers/spriteLGCSS.css'
-        ])
-        .pipe(rename('_spriteLG.scss'))
-        .pipe(gulp.dest('sass/containers/'))
-});
-
-//gulp.task('clean', function() {
-//    return gulp.src([
-//        'css/*',
-//        'js/*',
-//    ])
-//});
-
 gulp.task("concatScripts", function () {
     return gulp.src([
-            'js/lightboxjs/lightbox.js'
+            'js/lightbox.js'
         ])
         .on('error', swallowError)
         .pipe(concat('app.js'))
@@ -89,7 +49,7 @@ gulp.task("minifyScripts", ["concatScripts"], function () {
 
 gulp.task('watch', function () {
     gulp.watch(['sass/**/*.scss', 'sass/*.scss'], ['sassify']);
-    gulp.watch('js/lightboxjs/lightbox.js', ['minifyScripts']);
+    gulp.watch('js/**', ['minifyScripts']);
 });
 
 gulp.task('build', ['minifyScripts'], function () {

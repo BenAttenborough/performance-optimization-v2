@@ -2,7 +2,7 @@
  * Created by ben on 01/01/2017.
  */
 
-console.log("Lightbox working");
+console.log("Lightbox iss working");
 
 var Thumbnail = function (element) {
     this.element = element;
