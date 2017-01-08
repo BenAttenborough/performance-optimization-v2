@@ -24,6 +24,7 @@
   padding: 0.5rem 1.5rem;
   text-transform: none;
 }
+
 .menu .account a:hover {
   background-color: rgb(82, 202, 109);
   border-color: rgb(82, 202, 109);
@@ -40,13 +41,20 @@
 
 .logo-stock {
   color: #5d696b;
-  font-size: 2.8rem;
+  font-size: 1.4rem;
+  @media only screen and (min-width: 450px) {
+    font-size: 2.8rem;
+  }
+
 }
 
 .logo-photo {
   color: #37b9d8;
   font-family: "Ubuntu", sans-serif;
-  font-size: 2rem;
+  font-size: 1rem;
+  @media only screen and (min-width: 450px) {
+    font-size: 2rem;
+  }
 }
 
 .menu {
@@ -62,9 +70,12 @@
 }
 
 .menu .inline-list li {
-  margin-left: 1.375rem;
   float: none;
   display: inline-block;
+  margin-bottom: 1rem;
+  @media only screen and (min-width: 320px) {
+    margin-bottom: 0;
+  }
 }
 
 .menu .inline-list a {
@@ -105,6 +116,7 @@
   padding: 0.5rem 1.5rem;
   text-transform: none;
 }
+
 .menu .account a:hover {
   background-color: rgb(82, 202, 109);
   border-color: rgb(82, 202, 109);
