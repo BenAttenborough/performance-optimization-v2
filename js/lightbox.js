@@ -71,7 +71,10 @@ Thumbnail.prototype.showLightbox = function () {
     if (this.imageData.container) {
         var lightboxContainer = this.imageData.container;
         var photobox = lightboxContainer.getElementsByClassName("photoBox")[0];
-        var img = "<img src=\"" + this.imageData.src + "\">";
+        var img = "<img src=\"" + this.imageData.src + "\"";
+        img += " srcset = \"" + this.imageData.srcset + "\"";
+        img += " alt = \"" + this.imageData.alt + "\"";
+        img += ">";
         var revealModalBg = document.getElementById("reveal-modal-overlay");
         var closeButton = lightboxContainer.getElementsByClassName("close-reveal-modal")[0];
         this.addSelectListener(closeButton, "click", this.hideLightbox);
